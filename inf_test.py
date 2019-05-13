@@ -65,17 +65,18 @@ synth = Synthesizer()
 synth.load('./models/tacotron-20190510/model.ckpt-364000')
 
 
-te = 'Another world, another time. This land was green and good. Until the crystal cracked'
-synth.synthesize(te, str(int(time.time())) + '_1.wav')
+for i in range(5):
+    te = 'Another world, another time. This land was green and good. Until the crystal cracked'
+    synth.synthesize(te, str(int(time.time())) + '_1.wav')
 
-te = 'This is one very difficult sentense for me to pronounce, but I am trying my best, yo.'
-synth.synthesize(te, str(int(time.time())) + '_2.wav')
+    te = 'This is one very difficult sentense for me to pronounce, but I am trying my best, yo.'
+    synth.synthesize(te, str(int(time.time())) + '_2.wav')
 
-te = 'Another world, another time. This land was green and good. Until the crystal cracked.'
-synth.synthesize(te, str(int(time.time())) + '_3.wav')
+    te = 'Another world, another time. This land was green and good. Until the crystal cracked.'
+    synth.synthesize(te, str(int(time.time())) + '_3.wav')
 
-te = 'This is one very difficult sentense for me to pronounce, but I am trying my best, yo'
-synth.synthesize(te, str(int(time.time())) + '_4.wav')
+    te = 'This is one very difficult sentense for me to pronounce, but I am trying my best, yo'
+    synth.synthesize(te, str(int(time.time())) + '_4.wav')
 
-te = 'Now lets see how much time will it take to synthesize something conplemetely different after the system has been warmed up.'
-synth.synthesize(te, str(int(time.time())) + '_5.wav')
+    te = 'Now lets see how much time will it take to synthesize something conplemetely different after the system has been warmed up.'
+    synth.synthesize(te, str(int(time.time())) + '_5.wav')
