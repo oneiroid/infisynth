@@ -24,7 +24,7 @@ class Synthesizer:
 
       print('Loading checkpoint: %s' % checkpoint_path)
       config = tf.ConfigProto()
-      config.gpu_options.allow_growth = True
+      #config.gpu_options.allow_growth = True
       self.session = tf.Session(config=config)
       self.session.run(tf.global_variables_initializer())
       saver = tf.train.Saver()
@@ -43,10 +43,11 @@ class Synthesizer:
       timepoint1 = time.perf_counter()
       print("inference prep time {:.2f}s/it".format(timepoint1 - start))
 
-      start = time.perf_counter()
+      start = time.time()
       wav = self.session.run(self.wav_output, feed_dict=feed_dict)
-      timepoint1 = time.perf_counter()
+      timepoint1 = time.time()
       print("inference time {:.2f}s/it".format(timepoint1 - start))
+      print(timepoint1 - start)
 
       start = time.perf_counter()
       wav = audio.inv_preemphasis(wav)
