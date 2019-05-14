@@ -23,12 +23,24 @@ class Synthesizer:
         self.wav_output = audio.inv_spectrogram_tensorflow(self.model.linear_outputs[0])
 
       print('Loading checkpoint: %s' % checkpoint_path)
-      config = tf.ConfigProto()
+      config = tf.ConfigProto(log_device_placement=True)
       #config.gpu_options.allow_growth = True
+
       self.session = tf.Session(config=config)
       self.session.run(tf.global_variables_initializer())
       saver = tf.train.Saver()
       saver.restore(self.session, checkpoint_path)
+
+  def load_saved_model(self, path):
+      config = tf.ConfigProto()
+      #config.gpu_options.allow_growth = True
+      self.session = tf.Session(config=config)
+      self.session.run(tf.global_variables_initializer())
+      tf.saved_model.loader.load(self.session, ['serve'], path)
+
+
+  #def synthesize_saved_model(self, text, fn_wav='noname.wav'):
+
 
 
   def synthesize(self, text, fn_wav = 'noname.wav'):
@@ -55,7 +67,7 @@ class Synthesizer:
       timepoint1 = time.perf_counter()
       print("inference post proc time {:.2f}s/it".format(timepoint1 - start))
 
-      audio.save_wav(wav, './' + fn_wav)
+      #audio.save_wav(wav, './' + fn_wav)
       return wav
 
 
@@ -68,6 +80,7 @@ synth.load('./models/tacotron-20190510/model.ckpt-364000')
 for i in range(5):
     te = 'Another world, another time. This land was green and good. Until the crystal cracked'
     synth.synthesize(te, str(int(time.time())) + '_1.wav')
+
 
     te = 'This is one very difficult sentense for me to pronounce, but I am trying my best, yo.'
     synth.synthesize(te, str(int(time.time())) + '_2.wav')
