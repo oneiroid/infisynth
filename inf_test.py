@@ -23,7 +23,10 @@ class Synthesizer:
         self.wav_output = audio.inv_spectrogram_tensorflow(self.model.linear_outputs[0])
 
       print('Loading checkpoint: %s' % checkpoint_path)
-      config = tf.ConfigProto(log_device_placement=True)
+      config = tf.ConfigProto(log_device_placement=False)
+      config.intra_op_parallelism_threads = 1
+      config.inter_op_parallelism_threads = 1
+
       #config.gpu_options.allow_growth = True
 
       self.session = tf.Session(config=config)
